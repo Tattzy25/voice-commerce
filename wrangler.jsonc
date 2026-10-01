@@ -1,15 +1,38 @@
 {
-  "name": "<WORKER_NAME>",
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "voice-commerce",
   "main": "src/index.ts",
-  "compatibility_date": "<COMPATIBILITY_DATE>",
-  "compatibility_flags": [
-    "global_fetch_strictly_public"
+  "compatibility_date": "2026-09-30",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "routes": [
+    { "pattern": "voice-commerce.anigok.com", "custom_domain": true }
   ],
-  "assets": {
-    // The path to the directory containing the `index.html` file to be served at `/`
-    "directory": "./public"
-  },
+
+  "pipelines": [
+    {
+      "binding": "VOICE_COMMERCE_PIPELINE",
+      "stream": "7faa4f46b1f1466599a6d54af322176d"
+    }
+  ],
+
   "observability": {
-    "enabled": true
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "redact_query_string": false,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    },
+    "traces": {
+      "enabled": false,
+      "head_sampling_rate": 1,
+      "persist": true
+    },
+    "issues": {
+      "enabled": true
+    }
   }
 }
